@@ -1,3 +1,6 @@
+//Funzioni usate per fare un debug dei 3D object
+
+
 for (var propertyName in container.children[2]) {
 							console.log(propertyName+" : "+container.children[2][propertyName]);
 						}
