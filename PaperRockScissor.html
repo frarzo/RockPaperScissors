@@ -66,9 +66,6 @@
 			var ART_detector = new FLARMultiIdMarkerDetector(ART_param, 65);
 
 
-
-
-
 			//Returns the marker's id used in jsartoolkit
 			var getMarkerNumber = function (idx) {
 				var data = ART_detector.getIdMarkerData(idx);
@@ -83,8 +80,6 @@
 
 				return result;
 			}
-
-
 
 			ART_detector.setContinueMode(true);
 
@@ -132,10 +127,9 @@
 
 			// load the model
 			var loader = new THREE.GLTFLoader();
-
-
 			var oggetto;
 
+			//null card
 			function nullo() {
 				loader.load('src/tiles/null/null.gltf', function (gltf_model) {
 					oggetto = gltf_model.scene;
@@ -150,7 +144,7 @@
 					flush();
 				});
 			}
-
+			//paper card
 			function carta() {
 				loader.load('src/tiles/paper/paper.gltf', function (gltf_model) {
 					oggetto = gltf_model.scene;
@@ -160,12 +154,12 @@
 						container.children.pop();
 					}
 
-					container.add(oggetto);
 					console.log(container.children);
+					container.add(oggetto);
 
 				});
 			}
-
+			//rock card
 			function sasso() {
 				loader.load('src/tiles/rock/rock.gltf', function (gltf_model) {
 					oggetto = gltf_model.scene;
@@ -174,13 +168,13 @@
 					if (container.children.length > 2) {
 						container.children.pop();
 					}
-					
+
 					console.log(container.children);
 					container.add(oggetto);
 
 				});
 			}
-
+			//scissors card
 			function forbici() {
 				loader.load('src/tiles/scissors/scissors.gltf', function (gltf_model) {
 					oggetto = gltf_model.scene;
@@ -189,7 +183,7 @@
 					if (container.children.length > 2) {
 						container.children.pop();
 					}
-					
+
 					console.log(container.children);
 					container.add(oggetto);
 
@@ -207,10 +201,7 @@
 			container.add(alight);
 
 
-			// render loop
-
-
-			/////////////////////////////////////////////////////////////////////////////////////////////
+			//////////////////////////////////////////
 
 
 
@@ -247,15 +238,15 @@
 
 					switch (id) {
 						case 0:
-					
+
 							carta();
 							break;
 						case 1:
-						
+
 							sasso();
 							break;
 						case 2:
-							
+
 							forbici();
 							break;
 
@@ -265,7 +256,7 @@
 							break;
 
 					}
-					
+
 
 				}
 
@@ -290,9 +281,10 @@
 
 
 
-
-
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
 		// convert the camera projection matrix from JSARToolKit to Three.js format
 		function ConvertCameraMatrix(m) {
 			myMat = new THREE.Matrix4();
