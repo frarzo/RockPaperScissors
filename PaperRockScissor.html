@@ -139,9 +139,12 @@
 			function nullo() {
 				loader.load('src/tiles/null/null.gltf', function (gltf_model) {
 					oggetto = gltf_model.scene;
-
-
 					oggetto.scale.set(100, 100, 100);
+
+					if (container.children.length > 2) {
+						container.children.pop();
+					}
+
 					console.log(container.children);
 					container.add(oggetto);
 					flush();
@@ -151,33 +154,29 @@
 			function carta() {
 				loader.load('src/tiles/paper/paper.gltf', function (gltf_model) {
 					oggetto = gltf_model.scene;
-
-////////////////////////////////////////
 					oggetto.scale.set(100, 100, 100);
+
 					if (container.children.length > 2) {
 						container.children.pop();
 					}
-					console.log(container.children);
+
 					container.add(oggetto);
 					console.log(container.children);
-					
-				
+
 				});
 			}
 
 			function sasso() {
 				loader.load('src/tiles/rock/rock.gltf', function (gltf_model) {
 					oggetto = gltf_model.scene;
+					oggetto.scale.set(100, 100, 100);
 
 					if (container.children.length > 2) {
 						container.children.pop();
 					}
-					oggetto.scale.set(100, 100, 100);
+					
 					console.log(container.children);
 					container.add(oggetto);
-					
-					
-					
 
 				});
 			}
@@ -185,14 +184,14 @@
 			function forbici() {
 				loader.load('src/tiles/scissors/scissors.gltf', function (gltf_model) {
 					oggetto = gltf_model.scene;
+					oggetto.scale.set(100, 100, 100);
+
 					if (container.children.length > 2) {
 						container.children.pop();
 					}
-
-					oggetto.scale.set(100, 100, 100);
+					
 					console.log(container.children);
 					container.add(oggetto);
-					
 
 				});
 			}
@@ -248,15 +247,15 @@
 
 					switch (id) {
 						case 0:
-							last=pool[0];
+					
 							carta();
 							break;
 						case 1:
-						last=pool[1];
+						
 							sasso();
 							break;
 						case 2:
-						last=pool[2];
+							
 							forbici();
 							break;
 
@@ -266,9 +265,7 @@
 							break;
 
 					}
-					if (container.children.length > 3) {
-						container.children = container.children.slice(0, 2).concat(container.children.splice(container.children.length - 1));
-					}
+					
 
 				}
 
