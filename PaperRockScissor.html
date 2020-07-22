@@ -13,6 +13,9 @@
 
 
 	<script>
+		function flush(array) {
+			array = (array.length > 3 ? array.slice(0, 2).concat(array.splice(array.length - 1)) : array);
+		}
 
 		var counter = 0;
 
@@ -124,12 +127,12 @@
 
 
 			//**************************************************************
-				
+
 
 
 			// load the model
 			var loader = new THREE.GLTFLoader();
-			
+
 
 			var oggetto;
 
@@ -148,16 +151,16 @@
 			function carta() {
 				loader.load('src/tiles/paper/paper.gltf', function (gltf_model) {
 					oggetto = gltf_model.scene;
-					
+
 
 					oggetto.scale.set(100, 100, 100);
-					
+
 					console.log(container.children);
 					container.add(oggetto);
-					if (container.children.length>3) {
-						flush();
+					if (container.children.length > 3) {
+						flush(container.children);
 					}
-					
+
 				});
 			}
 
@@ -169,10 +172,10 @@
 					oggetto.scale.set(100, 100, 100);
 					console.log(container.children);
 					container.add(oggetto);
-					if (container.children.length>3) {
-						flush();
+					if (container.children.length > 3) {
+						flush(container.children);
 					}
-			
+
 				});
 			}
 
@@ -184,8 +187,10 @@
 					oggetto.scale.set(100, 100, 100);
 					console.log(container.children);
 					container.add(oggetto);
-					
-				
+					if (container.children.length > 3) {
+						flush(container.children);
+					}
+
 				});
 			}
 
@@ -237,7 +242,7 @@
 					}
 
 					//console.log("prova:  " + id);
-					
+
 					switch (id) {
 						case 0:
 							carta();
@@ -255,13 +260,13 @@
 							break;
 
 					}
-					if (container.children.length>3) {
-						container.children=container.children.slice(0, 2).concat(container.children.splice(container.children.length - 1));
+					if (container.children.length > 3) {
+						container.children = container.children.slice(0, 2).concat(container.children.splice(container.children.length - 1));
 					}
 
 				}
 
-				
+
 
 				if (markerCount > 0) {
 					var tmat = new NyARTransMatResult();
@@ -269,7 +274,7 @@
 
 					// we have detected a marker. Use the matrix to position the object and draw it
 					container.matrix = ConvertMarkerMatrix(tmat);
-					
+
 					renderer.render(scene, camera);
 				}
 
@@ -322,9 +327,9 @@
 				0, 0, 0, 1
 			);
 			return myMat;
-			
-		} 
-		
+
+		}
+
 
 	</script>
 </head>
