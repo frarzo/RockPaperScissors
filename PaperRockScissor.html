@@ -18,7 +18,7 @@
 		}
 
 		var counter = 0;
-
+		var last;
 		var sceltaP1, sceltaP2 = " ";
 		const valoreDefault = " ??? ";
 		var game = false;
@@ -152,15 +152,16 @@
 				loader.load('src/tiles/paper/paper.gltf', function (gltf_model) {
 					oggetto = gltf_model.scene;
 
-
+////////////////////////////////////////
 					oggetto.scale.set(100, 100, 100);
-
+					if (container.children.length > 2) {
+						container.children.pop();
+					}
 					console.log(container.children);
 					container.add(oggetto);
-					if (container.children.length > 3) {
-						flush(container.children);
-					}
-
+					console.log(container.children);
+					
+				
 				});
 			}
 
@@ -168,13 +169,15 @@
 				loader.load('src/tiles/rock/rock.gltf', function (gltf_model) {
 					oggetto = gltf_model.scene;
 
-
+					if (container.children.length > 2) {
+						container.children.pop();
+					}
 					oggetto.scale.set(100, 100, 100);
 					console.log(container.children);
 					container.add(oggetto);
-					if (container.children.length > 3) {
-					//	flush(container.children);
-					}
+					
+					
+					
 
 				});
 			}
@@ -182,14 +185,14 @@
 			function forbici() {
 				loader.load('src/tiles/scissors/scissors.gltf', function (gltf_model) {
 					oggetto = gltf_model.scene;
-
+					if (container.children.length > 2) {
+						container.children.pop();
+					}
 
 					oggetto.scale.set(100, 100, 100);
 					console.log(container.children);
 					container.add(oggetto);
-					if (container.children.length > 3) {
-						flush(container.children);
-					}
+					
 
 				});
 			}
@@ -245,18 +248,21 @@
 
 					switch (id) {
 						case 0:
+							last=pool[0];
 							carta();
 							break;
 						case 1:
+						last=pool[1];
 							sasso();
 							break;
 						case 2:
+						last=pool[2];
 							forbici();
 							break;
 
 						default:
 							nullo();
-							//console.log("inserisci text");
+							console.log("inserisci text");
 							break;
 
 					}
