@@ -65,18 +65,18 @@
 
 			//Returns the marker's id  - artoolkit
 			function getMarkerId(idx) {
-				var data = ART_detector.getIdMarkerData(idx);
-				if (data.packetLength > 4) {
+				//I dati sull'id del marker
+				var markerDataId = ART_detector.getIdMarkerData(idx);
+
+				//se è troppo lungo c'è qualcosa che non va
+				if (markerDataId.packetLength > 4) {
+					alert("Errore nel riconoscimento");
 					return -1;
 				}
 
-				var result = 0;
-				for (var i = 0; i < data.packetLength; i++) {
-					result = (result << 8) | data.getPacketData(i);
-				}
+				//DEBUG:console.log("packet[1]: "+markerDataId._packet[1]);
 
-				return result;
-				console.log("data: " + data + "  id: " + result);
+				return markerDataId._packet[1];
 			}
 
 			ART_detector.setContinueMode(true);
@@ -135,9 +135,9 @@
 						container.children.pop();
 					}
 
-					console.log(container.children);
+					//DEBUG console.log(container.children);
 					container.add(oggetto);
-					flush();
+
 				});
 			}
 
@@ -151,7 +151,7 @@
 						container.children.pop();
 					}
 
-					console.log(container.children);
+					//DEBUG console.log(container.children);
 					container.add(oggetto);
 
 				});
@@ -167,7 +167,7 @@
 						container.children.pop();
 					}
 
-					console.log(container.children);
+					//DEBUG console.log(container.children);
 					container.add(oggetto);
 
 				});
@@ -183,7 +183,7 @@
 						container.children.pop();
 					}
 
-					console.log(container.children);
+					//DEBUG console.log(container.children);
 					container.add(oggetto);
 
 				});
@@ -250,7 +250,7 @@
 
 						default:
 							nullo();
-							console.log("Problema, id non valido");
+							console.log("Use the markers in CARDS folder");
 							break;
 
 					}
@@ -274,7 +274,7 @@
 				ocanvas.getContext("2d").drawImage(dcanvas, 0, 0, dcanvas.width, dcanvas.height);
 
 
-			}, 40);
+			}, 20);
 		}
 
 

@@ -1,6 +1,11 @@
-//Funzioni usate per fare un debug dei 3D object
+//Functions used while debugging my code
 
 
 for (var propertyName in container.children[2]) {
 							console.log(propertyName+" : "+container.children[2][propertyName]);
 						}
+
+
+for (var propertyName in obj) {
+		console.log(propertyName + " : " + obj.propertyName);
+	}
