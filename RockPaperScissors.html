@@ -13,9 +13,6 @@
 
 
 	<script>
-		function flush(array) {
-			array = (array.length > 3 ? array.slice(0, 2).concat(array.splice(array.length - 1)) : array);
-		}
 
 		var counter = 0;
 		var last;
@@ -66,19 +63,20 @@
 			var ART_detector = new FLARMultiIdMarkerDetector(ART_param, 65);
 
 
-			//Returns the marker's id used in jsartoolkit
-			var getMarkerNumber = function (idx) {
-				var data = ART_detector.getIdMarkerData(idx);
-				if (data.packetLength > 4) {
+			//Returns the marker's id  - jsartoolkit
+			function getMarkerId(idx) {
+				//I dati sull'id del marker
+				var markerDataId = ART_detector.getIdMarkerData(idx);
+
+				//se è troppo lungo c'è qualcosa che non va
+				if (markerDataId.packetLength > 4) {
+					alert("Errore nel riconoscimento");
 					return -1;
 				}
 
-				var result = 0;
-				for (var i = 0; i < data.packetLength; i++) {
-					result = (result << 8) | data.getPacketData(i);
-				}
+				//DEBUG:console.log("packet[1]: "+markerDataId._packet[1]);
 
-				return result;
+				return markerDataId._packet[1];
 			}
 
 			ART_detector.setContinueMode(true);
@@ -124,8 +122,6 @@
 			//**************************************************************
 
 
-
-			// load the model
 			var loader = new THREE.GLTFLoader();
 			var oggetto;
 
@@ -139,11 +135,12 @@
 						container.children.pop();
 					}
 
-					console.log(container.children);
+					//DEBUG console.log(container.children);
 					container.add(oggetto);
-					flush();
+
 				});
 			}
+
 			//paper card
 			function carta() {
 				loader.load('src/tiles/paper/paper.gltf', function (gltf_model) {
@@ -154,11 +151,12 @@
 						container.children.pop();
 					}
 
-					console.log(container.children);
+					//DEBUG console.log(container.children);
 					container.add(oggetto);
 
 				});
 			}
+
 			//rock card
 			function sasso() {
 				loader.load('src/tiles/rock/rock.gltf', function (gltf_model) {
@@ -169,11 +167,12 @@
 						container.children.pop();
 					}
 
-					console.log(container.children);
+					//DEBUG console.log(container.children);
 					container.add(oggetto);
 
 				});
 			}
+
 			//scissors card
 			function forbici() {
 				loader.load('src/tiles/scissors/scissors.gltf', function (gltf_model) {
@@ -184,7 +183,7 @@
 						container.children.pop();
 					}
 
-					console.log(container.children);
+					//DEBUG console.log(container.children);
 					container.add(oggetto);
 
 				});
@@ -204,9 +203,7 @@
 			//////////////////////////////////////////
 
 
-
-
-			// process each frame
+			// processing
 
 			setInterval(function () {
 
@@ -223,12 +220,13 @@
 				var markerCount = ART_detector.detectMarkerLite(ART_raster, 128);
 
 
-
+				//Gets the id if a marker is visible, and then decides which card to disply
 				for (var index = 0; index < markerCount; index++) {
 
-					//console.log("test : " + markerCount);
+					//console.log("num marker presenti : " + markerCount);
+
 					// Get the ID number of the detected marker.
-					var id = getMarkerNumber(index);
+					var id = getMarkerId(index);
 
 					if (game == true) {
 						doStuff(id);
@@ -252,7 +250,7 @@
 
 						default:
 							nullo();
-							console.log("inserisci text");
+							console.log("Use the markers in CARDS folder");
 							break;
 
 					}
@@ -276,7 +274,7 @@
 				ocanvas.getContext("2d").drawImage(dcanvas, 0, 0, dcanvas.width, dcanvas.height);
 
 
-			}, 40);
+			}, 20);
 		}
 
 
@@ -296,19 +294,6 @@
 			);
 
 			return myMat;
-		}
-		var getMarkerNumber = function (idx) {
-			var data = detector.getIdMarkerData(idx);
-			if (data.packetLength > 4) {
-				return -1;
-			}
-
-			var result = 0;
-			for (var i = 0; i < data.packetLength; i++) {
-				result = (result << 8) | data.getPacketData(i);
-			}
-
-			return result;
 		}
 
 
